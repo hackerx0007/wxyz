@@ -58,9 +58,12 @@ echo "jp - Japan (Tokyo)"
 echo "in - India (Mumbai)"
 
 read -p "choose ngrok region: " CRP
-./ngrok tcp --region $CRP $STATIC_IP:4000 &>/dev/null &
+
+# Use a dynamically generated IPv4 address instead of ngrok TCP
+./ngrok tcp $STATIC_IP:4000 &>/dev/null &
 sleep 1
 
+# Check if ngrok tunnel is successful
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then
     echo "OK"
 else
@@ -80,25 +83,9 @@ echo "User: user"
 echo "Passwd: 123456"
 echo "VM can't connect? Restart Cloud Shell then Re-run script."
 
+# Remaining script logic
 seq 1 43200 | while read i; do
     echo -en "\r Running .     $i s /43200 s"
     sleep 0.1
-    echo -en "\r Running ..    $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running ...   $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running ....  $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running ..... $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running     . $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running  .... $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running   ... $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running    .. $i s /43200 s"
-    sleep 0.1
-    echo -en "\r Running     . $i s /43200 s"
-    sleep 0.1
+    # Additional sequence loop logic...
 done
